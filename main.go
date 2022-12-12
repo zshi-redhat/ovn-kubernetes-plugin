@@ -93,43 +93,61 @@ func NewOVNKubernetesConfigFromFileOrDefault(path string) (*OVNKubernetesConfig,
 	return nil, fmt.Errorf("getting OVNKubernetes config: %v", err)
 }
 
-func (p *OVNKubernetesPlugin) Name() string {
+func (p *OVNKubernetesPlugin) GetName() string {
 	return p.Name
 }
 
-func (p *OVNKubernetesPlugin) Version() string {
+func (p *OVNKubernetesPlugin) GetVersion() string {
 	return p.Version
 }
 
-func (p *OVNKubernetesPlugin) GetManifests() map[string]string {
-	manifests := map[string][]string{}
+func (p *OVNKubernetesPlugin) GetManifests(kind string) []map[string][]string {
+	manifests := make([]map[string][]string, 0)
 
-	manifests["namespace"] = []string{
-		"components/ovn/namespace.yaml",
-	}
-	manifests["serviceaccount"] = []string{
-		"components/ovn/node/serviceaccount.yaml",
-		"components/ovn/master/serviceaccount.yaml",
-	}
-	manifests["role"] = []string{
-		"components/ovn/role.yaml",
-	}
-	manifests["rolebinding"] = []string{
-		"components/ovn/rolebinding.yaml",
-	}
-	manifests["clusterrole"] = []string{
-		"components/ovn/clusterrole.yaml",
-	}
-	manifests["clusterrolebinding"] = []string{
-		"components/ovn/clusterrolebinding.yaml",
-	}
-	manifests["configmap"] = []string{
-		"components/ovn/configmap.yaml",
-	}
-	manifests["daemonset"] = []string{
-		"components/ovn/master/daemonset.yaml",
-		"components/ovn/node/daemonset.yaml",
-	}
+	manifests = append(manifests, map[string][]string{
+		"namespace": []string{
+			"/components/ovn/namespace.yaml",
+		},
+	})
+	manifests = append(manifests, map[string][]string{
+		"serviceaccount": []string{
+			"/components/ovn/node/serviceaccount.yaml",
+			"/components/ovn/master/serviceaccount.yaml",
+		},
+	})
+	manifests = append(manifests, map[string][]string{
+		"role": []string{
+			"/components/ovn/role.yaml",
+		},
+	})
+	manifests = append(manifests, map[string][]string{
+		"rolebinding": []string{
+			"/components/ovn/rolebinding.yaml",
+		},
+	})
+	manifests = append(manifests, map[string][]string{
+		"clusterrole": []string{
+			"/components/ovn/clusterrole.yaml",
+		},
+	})
+	manifests = append(manifests, map[string][]string{
+		"clusterrolebinding": []string{
+			"/components/ovn/clusterrolebinding.yaml",
+		},
+	})
+	manifests = append(manifests, map[string][]string{
+		"configmap": []string{
+			"/components/ovn/configmap.yaml",
+		},
+	})
+	manifests = append(manifests, map[string][]string{
+		"daemonset": []string{
+			"/components/ovn/master/daemonset.yaml",
+			"/components/ovn/node/daemonset.yaml",
+		},
+	})
+
+	return manifests
 }
 
 func (p *OVNKubernetesPlugin) ValidateConfig() bool {
