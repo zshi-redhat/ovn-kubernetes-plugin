@@ -1,0 +1,6 @@
+# github.com/golang/glog v1.0.0
+## explicit; go 1.11
+github.com/golang/glog
+# gopkg.in/yaml.v2 v2.4.0
+## explicit; go 1.15
+gopkg.in/yaml.v2
